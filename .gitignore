@@ -1,6 +1,11 @@
 
 # Ignore data
-data/images
+images
 
-# Ignore external repos
-src/models
+# Ignore models
+models/ssd_inception_v2_coco_2017_11_17.tar.gz
+models/ssd_inception_v2_coco_2017_11_17
+
+# Ignore repos
+tensorflow
+cocoapi

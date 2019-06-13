@@ -9,7 +9,7 @@ Run the install script
 ## 2. Train the model
 train the models
 ```bash
-python sc/train.py data/images
+./train.sh
 ```
 
 ## Before Start need some  prerequisites to be satisfied.
