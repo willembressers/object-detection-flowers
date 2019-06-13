@@ -8,7 +8,7 @@ import xml.etree.ElementTree as ET
 
 
 # get the full path to the root of this repo
-root_dir = os.path.abspath(os.path.sep.join([__file__, os.pardir, os.pardir]))
+root_dir = os.path.abspath(os.path.sep.join([__file__, os.pardir]))
 images_dir = os.path.sep.join([root_dir, 'images'])
 data_dir = os.path.sep.join([root_dir, 'data'])
 models_dir = os.path.sep.join([root_dir, 'models'])
@@ -19,6 +19,8 @@ def xml_2_df():
 
 	# loop over the given root directory
 	for sub_directory in os.listdir(images_dir):
+
+		stage = 'val' if sub_directory == 'test' else sub_directory
 
 		# get the path of the sub directory
 		path = os.path.sep.join([images_dir, sub_directory])
@@ -40,7 +42,7 @@ def xml_2_df():
 
 						# collect the information
 						anchors.append({
-							'stage':sub_directory,
+							'stage':stage,
 							'file_path':os.path.sep.join([path, root.find('filename').text]),
 							'width':int(root.find('size')[0].text),
 							'height':int(root.find('size')[1].text),
@@ -143,7 +145,7 @@ def create_tf_records(anchors_df):
 	for stage, group in anchors_df.groupby(['stage']):
 		
 		# create a tensorflow record file per stage
-		writer = tf.python_io.TFRecordWriter(os.path.sep.join([data_dir, stage + '.record']))
+		writer = tf.python_io.TFRecordWriter(os.path.sep.join([data_dir, 'flowers_' + stage + '.record']))
 		
 		# loop over the unique files in the stage
 		for file_path, file_group in group.groupby(['file_path']):
@@ -157,7 +159,7 @@ def create_tf_records(anchors_df):
 		# close the writer
 		writer.close()
 		
-	# 	print('Successfully created the '+ stage + ' TFRecords')
+		print('Successfully created the '+ stage + ' TFRecords')
 
 
 def main():
