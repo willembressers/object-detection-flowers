@@ -1,1 +1,6 @@
-models
+
+# Ignore data
+data/images
+
+# Ignore external repos
+src/models

@@ -1,9 +1,15 @@
 # Object Detection of Flowers using TensorFlow API
 
-## Installation
+## 1. Installation
 Run the install script
 ```bash
 ./install.sh
+```
+
+## 2. Train the model
+train the models
+```bash
+python sc/train.py data/images
 ```
 
 ## Before Start need some  prerequisites to be satisfied.

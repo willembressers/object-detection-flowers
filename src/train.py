@@ -1,6 +1,8 @@
+import io
 import os
 import click
 import pandas
+from PIL import Image
 import tensorflow as tf
 import xml.etree.ElementTree as ET
 
@@ -49,7 +51,74 @@ def xml_2_df(images_directory):
 
 	return pandas.DataFrame(anchors)
 
-def create_tf_records(anchors_df):
+def int64_feature(value):
+	return tf.train.Feature(int64_list=tf.train.Int64List(value=[value]))
+
+def int64_list_feature(value):
+	return tf.train.Feature(int64_list=tf.train.Int64List(value=value))
+
+def bytes_feature(value):
+	return tf.train.Feature(bytes_list=tf.train.BytesList(value=[value]))
+
+def bytes_list_feature(value):
+	return tf.train.Feature(bytes_list=tf.train.BytesList(value=value))
+
+def float_list_feature(value):
+	return tf.train.Feature(float_list=tf.train.FloatList(value=value))
+
+def aggregate_file_group(file_group, width, height, classes):
+	xmins = []
+	xmaxs = []
+	ymins = []
+	ymaxs = []
+	text = []
+	label = []
+
+	for index, row in file_group.iterrows():
+		xmins.append(row['xmin'] / width)
+		xmaxs.append(row['xmax'] / width)
+		ymins.append(row['ymin'] / height)
+		ymaxs.append(row['ymax'] / height)
+		text.append(row['class'].encode('utf8'))
+		label.append(classes[row['class']])
+		
+	return xmins, xmaxs, ymins, ymaxs, text, label
+
+
+def create_tf_example(file_path, file_group, classes):
+	# read the file (with tensorflow)
+	with tf.gfile.GFile(file_path, 'rb') as fid:			
+		encoded_jpg = fid.read()
+		encoded_jpg_io = io.BytesIO(encoded_jpg)
+
+		# read image with PIL 
+		image = Image.open(encoded_jpg_io)
+
+		# get image dimensions
+		width, height = image.size
+
+		# aggregate the file group
+		xmins, xmaxs, ymins, ymaxs, texts, labels =  aggregate_file_group(file_group, width, height, classes)
+
+		# create the example
+		return tf.train.Example(features=tf.train.Features(feature={
+			'image/height': int64_feature(height),
+			'image/width': int64_feature(width),
+			'image/filename': bytes_feature(file_path.encode('utf8')),
+			'image/source_id': bytes_feature(file_path.encode('utf8')),
+			'image/encoded': bytes_feature(encoded_jpg),
+			'image/format': bytes_feature( b'jpg'),
+			'image/object/bbox/xmin': float_list_feature(xmins),
+			'image/object/bbox/xmax': float_list_feature(xmaxs),
+			'image/object/bbox/ymin': float_list_feature(ymins),
+			'image/object/bbox/ymax': float_list_feature(ymaxs),
+			'image/object/class/text': bytes_list_feature(texts),
+			'image/object/class/label': int64_list_feature(labels),
+		}))
+				
+
+
+def create_tf_records(anchors_df, classes):
 	models_directory = os.path.sep.join([root_dir, 'models'])
 
 	# loop over the stages (train / test)
@@ -62,7 +131,7 @@ def create_tf_records(anchors_df):
 		for file_path, file_group in group.groupby(['file_path']):
 			
 			# create the trainings examples
-			tf_example = create_tf_example(file_path, file_group)
+			tf_example = create_tf_example(file_path, file_group, classes)
 			
 			# write to record
 			writer.write(tf_example.SerializeToString())
@@ -87,9 +156,7 @@ def main(images_directory):
 	classes = {name:id for id, name in enumerate(anchors_df['class'].unique())}
 
 	# create the tensorflow records
-	create_tf_records(anchors_df)
-
-	print(anchors_df.head())
+	create_tf_records(anchors_df, classes)
 
 
 if __name__ == '__main__':
