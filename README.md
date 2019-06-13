@@ -1,4 +1,10 @@
-# **Object Detection of Flowers using TensorFlow API**
+# Object Detection of Flowers using TensorFlow API
+
+## Installation
+Run the install script
+```bash
+./install.sh
+```
 
 ## Before Start need some  prerequisites to be satisfied.
 

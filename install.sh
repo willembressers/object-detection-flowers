@@ -19,3 +19,8 @@ export PYTHONPATH=$PYTHONPATH:$ROOT:$ROOT/models/research/slim
 
 echo -e '\n\n--- Testing the Installation ---'
 cd $ROOT/models/research/ && python object_detection/builders/model_builder_test.py
+
+if [ ! -d $ROOT/data/images ]; then
+	echo -e '\n\n--- Extracting images ---'
+	tar xf $ROOT/data/images.tar.gz -C $ROOT/data
+fi

@@ -3,6 +3,7 @@ astor==0.8.0
 attrs==19.1.0
 backcall==0.1.0
 bleach==3.1.0
+Click==7.0
 contextlib2==0.5.5
 cycler==0.10.0
 Cython==0.29.10
@@ -36,6 +37,7 @@ nbconvert==5.5.0
 nbformat==4.4.0
 notebook==5.7.8
 numpy==1.16.4
+pandas==0.24.2
 pandocfilters==1.4.2
 parso==0.4.0
 pexpect==4.7.0
@@ -49,6 +51,7 @@ Pygments==2.4.2
 pyparsing==2.4.0
 pyrsistent==0.15.2
 python-dateutil==2.8.0
+pytz==2019.1
 pyzmq==18.0.1
 qtconsole==4.5.1
 Send2Trash==1.5.0
