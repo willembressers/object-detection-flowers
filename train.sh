@@ -4,7 +4,7 @@ ROOT=$(pwd)
 
 if [ ! -f $ROOT/data/train.record ]; then
 	echo -e '\n\n--- Generate tf records ---'
-	python src/generate_tf_records.py
+	python generate_tf_records.py
 fi 
 
 echo -e '\n\n--- Add Libraries to PYTHONPATH ---'
