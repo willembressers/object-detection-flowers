@@ -2,7 +2,7 @@ ROOT=$(pwd)
 
 # SEE https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_locally.md
 
-if [ ! -f $ROOT/models/flowers/train.record ]; then
+if [ ! -f $ROOT/data/train.record ]; then
 	echo -e '\n\n--- Generate tf records ---'
 	python src/generate_tf_records.py
 fi 

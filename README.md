@@ -1,22 +1,18 @@
 # Object Detection of Flowers using TensorFlow API
 
+Folder structure mainly based on [tensorflow/models/research/object_detection](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_locally.md)
+
 ## 1. Installation
-Run the install script
+Install all the requirements. See: [https://github.com/tensorflow/models](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md)
 ```bash
 ./install.sh
 ```
 
 ## 2. Train the model
-train the models
+Train the model. See: [https://github.com/tensorflow/models](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_locally.md)
 ```bash
 ./train.sh
 ```
 
-## Before Start need some  prerequisites to be satisfied.
-
-- [Tensorflow Object-Detection instructions](https://github.com/Akshaypatil15/object-detection-flowers/blob/master/object_detection/g3doc/installation.md).
-
-- [Configuring an object detection pipeline](https://github.com/Akshaypatil15/object-detection-flowers/blob/master/object_detection/g3doc/configuring_jobs.md)
-
-- [Preparing Inputs](https://github.com/Akshaypatil15/object-detection-flowers/blob/master/object_detection/g3doc/preparing_inputs.md)
-
+## 3. Start the dashboard
+Run the dash dashboard and manually upload (test) images.
