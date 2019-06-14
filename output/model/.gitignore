@@ -3,6 +3,3 @@
 
 # Except this file
 !.gitignore
-
-# And this folder
-!images
