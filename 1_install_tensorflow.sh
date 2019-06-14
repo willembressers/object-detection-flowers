@@ -22,10 +22,12 @@ if [ ! -d $ROOT/cocoapi ]; then
 fi
 
 echo -e '\n\n--- Protobuf Compilation ---'
-cd $ROOT/tensorflow/models/research/ && protoc object_detection/protos/*.proto --python_out=.
+cd $ROOT/tensorflow/models/research/ 
+protoc object_detection/protos/*.proto --python_out=.
 
 echo -e '\n\n--- Add Libraries to PYTHONPATH ---'
 export PYTHONPATH=$PYTHONPATH:$ROOT:$ROOT/tensorflow/models/research/slim
 
 echo -e '\n\n--- Testing the Installation ---'
-cd $ROOT/tensorflow/models/research/ && python object_detection/builders/model_builder_test.py
+cd $ROOT/tensorflow/models/research/ 
+python object_detection/builders/model_builder_test.py

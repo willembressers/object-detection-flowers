@@ -2,7 +2,6 @@ ROOT=$(pwd)
 
 # SEE https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/preparing_inputs.md
 
-echo -e '\n\n--- Add Libraries to PYTHONPATH ---'
 export PYTHONPATH=$PYTHONPATH:$ROOT:$ROOT/tensorflow/models/research/slim
 
 if [ ! -d $ROOT/images ]; then

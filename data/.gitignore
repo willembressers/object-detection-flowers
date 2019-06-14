@@ -1,5 +1,8 @@
 # Ignore everything in this directory
 *
+
 # Except this file
 !.gitignore
+
+# And the labels file
 !flowers_label_map.pbtxt

@@ -26,5 +26,17 @@ A local training job can be run with the following command:
 ./4_run_training.sh
 ```
 
+## 5. Exporting the Tensorflow Graph
+After your model has been trained, you should export it to a Tensorflow graph proto. First, you need to identify a candidate checkpoint to export. 
+```bash
+./5_export_model.sh
+```
+
+## 6. Test the model
+Just for fun
+```bash
+./6_test_model.sh
+```
+
 ## 5. Start the dashboard
 Run the dash dashboard and manually upload (test) images.
